@@ -62,7 +62,7 @@ class _WebViewPageState extends State<WebViewPage> {
                       child: SingleChildScrollView(
                         physics: const AlwaysScrollableScrollPhysics(),
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height,
+                          height: MediaQuery.of(context).size.height - 25.sp,
                           child: _inAppBarWebView(controller, widget.webUrl),
                         ),
                       ),
