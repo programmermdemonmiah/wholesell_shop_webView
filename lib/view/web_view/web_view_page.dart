@@ -48,13 +48,13 @@ class _WebViewPageState extends State<WebViewPage> {
                 },
                 child: Stack(
                   children: [
-                    _inAppBarWebView(controller, widget.webUrl),
                     ListView(
                       physics: const AlwaysScrollableScrollPhysics(),
                       children: [
                         SizedBox(height: MediaQuery.of(context).size.height)
                       ],
                     ),
+                    _inAppBarWebView(controller, widget.webUrl),
                     if (controller.progress.value < 1)
                       LinearProgressIndicator(
                         value: controller.progress.value,
