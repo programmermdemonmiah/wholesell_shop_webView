@@ -21,8 +21,6 @@ class WebViewPage extends StatefulWidget {
 class _WebViewPageState extends State<WebViewPage> {
   @override
   Widget build(BuildContext context) {
-    int i = 0;
-    print("return build ${i++}");
     return GetBuilder<WebShowViewModel>(builder: (controller) {
       return WillPopScope(
         onWillPop: () async {
@@ -30,7 +28,7 @@ class _WebViewPageState extends State<WebViewPage> {
             controller.webController.goBack();
             return false;
           } else {
-            _showExitDialouge();
+            _showExitDialog();
             return false;
           }
         },
@@ -48,25 +46,22 @@ class _WebViewPageState extends State<WebViewPage> {
                     },
                   );
                 },
-                child: Column(
+                child: Stack(
                   children: [
-                    controller.progress.value >= 1
-                        ? const SizedBox.shrink()
-                        : LinearProgressIndicator(
-                            value: controller.progress.value,
-                            minHeight: 5.sp,
-                            color: Colors.green,
-                            backgroundColor: AppColors.whiteBg,
-                          ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height - 25.sp,
-                          child: _inAppBarWebView(controller, widget.webUrl),
-                        ),
-                      ),
+                    _inAppBarWebView(controller, widget.webUrl),
+                    ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        SizedBox(height: MediaQuery.of(context).size.height)
+                      ],
                     ),
+                    if (controller.progress.value < 1)
+                      LinearProgressIndicator(
+                        value: controller.progress.value,
+                        minHeight: 5.sp,
+                        color: Colors.green,
+                        backgroundColor: AppColors.whiteBg,
+                      ),
                   ],
                 ),
               ),
@@ -111,7 +106,7 @@ class _WebViewPageState extends State<WebViewPage> {
     );
   }
 
-  void _showExitDialouge() {
+  void _showExitDialog() {
     showDialog(
       context: context,
       barrierDismissible: false,
