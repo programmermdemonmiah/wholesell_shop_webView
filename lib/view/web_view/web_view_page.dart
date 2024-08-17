@@ -42,18 +42,13 @@ class _WebViewPageState extends State<WebViewPage> {
                   await Future.delayed(
                     const Duration(seconds: 1),
                     () async {
+                      // print("reload access again");
                       await controller.webController.reload();
                     },
                   );
                 },
                 child: Stack(
                   children: [
-                    ListView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      children: [
-                        SizedBox(height: MediaQuery.of(context).size.height)
-                      ],
-                    ),
                     _inAppBarWebView(controller, widget.webUrl),
                     if (controller.progress.value < 1)
                       LinearProgressIndicator(
